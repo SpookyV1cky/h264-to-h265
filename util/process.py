@@ -3,10 +3,8 @@ import ffmpeg
 from os.path import join, getsize
 from util.db import *
 import time
-import colorama
-from colorama import Back, Fore, Style
 
-VIDEO_CODEC = 'hevc_qsv' #libx265 for CPU, hevc_nvenc for Nvidia GPU, hevc_qsv intel
+VIDEO_CODEC = 'libx265' #libx265 for CPU, hevc_nvenc for Nvidia GPU, hevc_qsv intel
 
 def transcod(video, out, new_bitrate, audio_codec, audio_bitrate):
 
@@ -20,11 +18,10 @@ def transcod(video, out, new_bitrate, audio_codec, audio_bitrate):
 
 
 def process(tasklist):
-    colorama.init(autoreset = True)
 
     for task in tasklist:
         if(task['status'] == False):
-            print( Fore.MAGENTA + "transcoding " + task['name'])
+            print("transcoding " + task['name'])
             new_bitrate = int(float(task['bit_rate']) * .60) #60%
             try:
                 transcod(task['path'], task['out'], new_bitrate, task['audio_codec'], task['audio_bitrate'])
@@ -32,6 +29,6 @@ def process(tasklist):
             except:
                 time.sleep(0.5)
                 os.remove(task['out'])
-                print( Fore.CYAN + ' \n UnU Bye Bye </3 ')
+                print(' \n UnU Bye Bye </3 ')
                 break
     db_save(tasklist)
