@@ -21,7 +21,7 @@ def delete_all():
                     codec = metadata['streams'][0]['codec_name']
                     
                     if(codec == 'h264'):
-                        print(Fore.RED + "Deleting " + name + "...")
+                        print("Deleting " + name + "...")
                         os.remove(video)
                     else:
                         print("ignoring " + name + " [NOT H.264] " + codec)

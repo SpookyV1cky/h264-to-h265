@@ -4,7 +4,7 @@ from os.path import join, getsize
 from util.db import *
 import time
 
-VIDEO_CODEC = 'libx265' #libx265 for CPU, hevc_nvenc for Nvidia GPU, hevc_qsv intel
+VIDEO_CODEC = 'hevc_qsv' #libx265 for CPU, hevc_nvenc for Nvidia GPU, hevc_qsv intel
 
 def transcod(video, out, new_bitrate, audio_codec, audio_bitrate):
 
@@ -14,7 +14,8 @@ def transcod(video, out, new_bitrate, audio_codec, audio_bitrate):
     .output(out, **{'b:v': new_bitrate, 'codec:v':VIDEO_CODEC, 'preset': 'slow', 'b:a':audio_bitrate, 'codec:a': audio_codec})
     .run()
     )
-    print(Fore.GREEN + "[ OK ]")
+    print("[ OK ]")
+    return True
 
 
 def process(tasklist):
