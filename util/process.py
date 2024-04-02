@@ -27,9 +27,13 @@ def process(tasklist):
             try:
                 transcod(task['path'], task['out'], new_bitrate, task['audio_codec'], task['audio_bitrate'])
                 task['status'] = True
-            except:
+            except KeyboardInterrupt:
                 time.sleep(0.5)
                 os.remove(task['out'])
                 print(' \n UnU Bye Bye </3 ')
                 break
+            except:
+                os.remove(task['out'])
+                task['status'] = True
+                continue
     db_save(tasklist)
