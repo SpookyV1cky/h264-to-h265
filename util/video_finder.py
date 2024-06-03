@@ -13,9 +13,8 @@ def find_something():
         
         for name in files:
                 
-                if(name.split('.').pop() == 'mp4'):
+                if(name.split('.').pop() in ['mp4','wmv','avi']):
                     video = os.path.join(root, name)
-                    
                     metadata = ffmpeg.probe(video)
 
                     for stream in metadata['streams']:
@@ -29,17 +28,15 @@ def find_something():
                             audio_codec = stream['codec_name']
                             audio_bitrate = stream['bit_rate']
 
-                    if(codec == 'h264'):
-
-                        out = os.path.join(root, "h265_" + name)
-                        tasklist.append({
-                         "name":name,
-                         "path":video,
-                         "out":out,
-                         "bit_rate":bit_rate,
-                         "audio_codec":audio_codec,
-                         "audio_bitrate":audio_bitrate,
-                         "status": False
+                    out = os.path.join(root, "h265_" + str(name.split('.')[:-1]) + '.mp4')
+                    tasklist.append({
+                     "name":name,
+                     "path":video,
+                     "out":out,
+                     "bit_rate":5000000,
+                     "audio_codec":'mp3', #audio_codec
+                     "audio_bitrate":audio_bitrate,
+                     "status": False
                         })
     print(" [ OK ] ")
     db_save(tasklist)
