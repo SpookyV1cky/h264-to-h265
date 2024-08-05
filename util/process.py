@@ -34,6 +34,6 @@ def process(tasklist):
                 break
             except:
                 os.remove(task['out'])
-                task['status'] = True
+                task['status'] = 'err'
                 continue
     db_save(tasklist)
